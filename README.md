@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ```python
 owner_id = [123]  # 机器人root管理员 QQ 号
 
-ws_url = "xxx"  # napcatQQ 监听的 WebSocket API 地址
+ws_url = "xxx"  # 协议端（一般是NapCatQQ、LLOnebot或其他支持ws正向通信监听的客户端）监听的 WebSocket API 地址
 
 token = "xxx"  # 如果需要认证，请填写认证 token
 ```
