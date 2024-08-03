@@ -3,7 +3,7 @@
 ## 机器人启动
 
 ```bash
-python main.py
+python3 main.py
 ```
 
 ## 开发功能
