@@ -1,6 +1,6 @@
 # W1ndys-bot
 
-基于 Python 和 OneBot 11 的 QQ 机器人模块加载器实现
+对接 OneBot 的 Python 模块加载器
 
 ## 介绍及背景
 
