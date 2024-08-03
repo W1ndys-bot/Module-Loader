@@ -27,7 +27,7 @@ OneBot 11 标准 [botuniverse /onebot-11: OneBot 11 标准 (github.com)](https:/
 
 go-cqhttp [API | go-cqhttp 帮助中心](https://docs.go-cqhttp.org/api/)
 
-> 备注：本机器人实现基于 **Python** 做核心开发，使用 **NapCatQQ** 作为消息平台，**OneBot 11** 作为 QQ 机器人 API 实现。
+> 备注：本机器人实现基于 **Python** 做核心开发，使用 **NapCatQQ** 或 **LL 作为消息平台，**OneBot 11\*\* 作为 QQ 机器人 API 实现。
 
 ## 使用方法
 
@@ -65,3 +65,7 @@ DD_BOT_SECRET = "xxx"
 ## 开发文档
 
 开发功能请参考：[dev.md](dev.md)
+
+## 友链
+
+[School-Robot/Plugin-Loader: 用于对接 OneBot 的 Python 插件加载器 (github.com)](https://github.com/School-Robot/Plugin-Loader)
