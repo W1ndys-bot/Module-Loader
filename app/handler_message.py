@@ -1,4 +1,4 @@
-# handlers/message_handler.py
+# handler_message.py
 
 import json
 import logging
@@ -6,9 +6,11 @@ import asyncio
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+)  # 添加到系统路径，以便于导入自定义模块
 
-from scripts.test.main import handle_group_message
+from scripts.test.main import handle_group_message as test  # 引入测试函数
 
 
 # 处理消息事件的逻辑
@@ -19,7 +21,7 @@ async def handle_message_event(websocket, msg):
             group_id = msg["group_id"]
             logging.info(f"处理群消息,群ID:{group_id}")
             logging.info(f"原消息内容:{msg}")
-            await handle_group_message(websocket, msg)
+            await test(websocket, msg)
 
         # 处理群通知事件
         elif msg.get("post_type") == "notice":
@@ -28,7 +30,7 @@ async def handle_message_event(websocket, msg):
         elif msg["message_type"] == "private":
             pass
             # await handle_private_message()
-            # await handle_anonymous_message(websocket, user_id, raw_message) # 关闭匿名系统
+
         else:
             logging.info(f"收到未知消息类型: {msg}")
 

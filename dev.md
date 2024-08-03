@@ -16,6 +16,8 @@ OneBot 11 标准已经支持了大部分功能，本项目已经将 OneBot 11 �
 
 具体的 API 文档请参考：[onebot-11/api at master · botuniverse/onebot-11 (github.com)](https://github.com/botuniverse/onebot-11/tree/master/api)
 
+本模块的 API 实现请看：[api.py](./app/api.py)，写功能的时候需要哪个 API，就导入哪个 API 的函数，也可以全部导入图个方便
+
 ### 如何确认收到的事件
 
 文档里详细说明了 QQ 各种情况的发生会发出什么类型的消息，以便于功能开发者对症下药进行开发
@@ -49,5 +51,34 @@ async def handle_group_message(websocket, msg):
         )
         if raw_message["message"] == "test":  # 判断消息是否为“test”
             await send_group_msg(websocket, group_id, "Test Successful")  # 发送群消息
+
+```
+
+然后到 `app/handler_message.py` 文件中，将 `handle_group_message` 函数引入到启动文件中，就可以让这个函数被加载器加载了
+
+例如：
+
+```python
+# handler_message.py
+
+import json
+import logging
+import asyncio
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # 添加到系统路径，以便于导入自定义模块
+
+from scripts.test.main import handle_group_message as test  # 引入测试函数
+
+# 处理消息事件的逻辑
+async def handle_message_event(websocket, msg):
+    try:
+        # 处理群消息
+        if msg.get("message_type") == "group":
+            group_id = msg["group_id"]
+            logging.info(f"处理群消息,群ID:{group_id}")
+            logging.info(f"原消息内容:{msg}")
+            await test(websocket, msg)  # 调用测试函数
 
 ```
