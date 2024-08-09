@@ -53,7 +53,7 @@ token = "xxx"  # 如果需要认证，请填写认证 token
 
 #### 配置钉钉通知
 
-打开`app/config.py`
+打开`app/secret.py`
 
 ```python
 # 这里替换为你自己的TOKEN，不要直接用我的，我的有IP验证，用我的也没用
