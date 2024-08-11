@@ -1,3 +1,3 @@
-dingtalk_token = "x"
+dingtalk_token = "0c0ad4540eed1d1eab06d7229a573146430e6a8b5429eb4e3ada81e039987f6c"
 
-dingtalk_secret = "x"
+dingtalk_secret = "SEC1000ac85e635258597301a211cde38a94644e10f473b110af6f2463e6008e441"

@@ -1,0 +1,4 @@
+# Python临时文件
+__pycache__/
+*.py[cod]
+*$py.class

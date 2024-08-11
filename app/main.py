@@ -21,6 +21,7 @@ async def main():
                     f"机器人断开连接，当前时间:{current_time}", f"错误信息: {e}"
                 )
                 main.notified = True
+
             await asyncio.sleep(1)  # 每秒重试一次
 
 

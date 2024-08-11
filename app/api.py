@@ -16,12 +16,12 @@ async def send_private_msg(websocket, user_id, content):
 
 # 发送群消息
 async def send_group_msg(websocket, group_id, content):
+    content = "呱！" + content
     message = {
         "action": "send_group_msg",
         "params": {"group_id": group_id, "message": content},
     }
     await websocket.send(json.dumps(message))
-    logging.info(f"已发送消息到群 {group_id}: {content}")
 
 
 # 发送消息
@@ -37,6 +37,16 @@ async def send_msg(websocket, message_type, user_id, group_id, message):
     }
     await websocket.send(json.dumps(message))
     logging.info(f"已发送消息: {message}")
+
+
+# 发送合并转发消息
+async def send_forward_msg(websocket, group_id, content):
+    message = {
+        "action": "send_forward_msg",
+        "params": {"group_id": group_id, "message": content},
+    }
+    await websocket.send(json.dumps(message))
+    logging.info(f"已发送合并转发消息: {content}")
 
 
 # 撤回消息
@@ -86,8 +96,6 @@ async def set_group_kick(websocket, group_id, user_id):
         "params": {"group_id": group_id, "user_id": user_id},
     }
     await websocket.send(json.dumps(kick_msg))
-    logging.info(f"已踢出用户 {user_id}。")
-    await send_group_msg(websocket, group_id, f"已踢出用户 {user_id}。")
 
 
 # 群组单人禁言
@@ -101,8 +109,13 @@ async def set_group_ban(websocket, group_id, user_id, duration):
         logging.info(f"已解除 [CQ:at,qq={user_id}] 禁言。")
         message = f"已解除 [CQ:at,qq={user_id}] 禁言。"
     else:
-        logging.info(f"已禁言 [CQ:at,qq={user_id}] {duration} 秒。")
-        message = f"已禁言 [CQ:at,qq={user_id}] {duration} 秒。"
+        minutes = duration / 60
+        hours = duration / 3600
+        days = duration / 86400
+        logging.info(
+            f"已禁言 [CQ:at,qq={user_id}] {duration} 秒，相当于 {minutes:.2f} 分钟，{hours:.2f} 小时，{days:.2f} 天。"
+        )
+        message = f"已禁言 [CQ:at,qq={user_id}] {duration} 秒，相当于 {minutes:.2f} 分钟，{hours:.2f} 小时，{days:.2f} 天。"
     await send_group_msg(websocket, group_id, message)
 
 
@@ -418,27 +431,3 @@ async def clean_cache(websocket):
     }
     await websocket.send(json.dumps(clean_cache_msg))
     logging.info("已清理缓存。")
-
-
-# 解析并执行命令
-async def execute_command(websocket, action, params):
-    try:
-        params_json = json.loads(params)
-
-        if not action:
-            logging.error("无效的命令: 缺少 action")
-            return
-
-        logging.info(f"即将执行API命令: {action} {params_json}")
-        await run_api(websocket, action, params_json)
-    except json.JSONDecodeError:
-        logging.error("参数解析失败: 无效的 JSON 格式")
-    except Exception as e:
-        logging.error(f"执行命令时出错: {e}")
-
-
-# 执行API调用
-async def run_api(websocket, action, params):
-    api_message = {"action": action, "params": params}
-    await websocket.send(json.dumps(api_message))
-    logging.info(f"已调用 API {action}。")

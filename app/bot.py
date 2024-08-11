@@ -13,7 +13,7 @@ from config import owner_id
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from authentication import authenticate
-from handler_message import handle_message, handle_cron_task
+from handler_events import handle_message, handle_cron_task
 from logger import setup_logger
 from api import send_private_msg
 
@@ -36,10 +36,10 @@ async def connect_to_bot():
             f"当前时间: {current_time}",
         )
         async for message in websocket:
-            # 处理事件
-            asyncio.create_task(handle_message(websocket, message))
-            # 处理定时任务
-            asyncio.create_task(handle_cron_task(websocket))
+            # 并发执行处理事件和处理定时任务
+            await asyncio.gather(
+                handle_message(websocket, message), handle_cron_task(websocket)
+            )
 
 
 if __name__ == "__main__":
