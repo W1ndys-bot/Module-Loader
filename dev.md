@@ -82,3 +82,7 @@ async def handle_message_event(websocket, msg):
             await test(websocket, msg)  # 调用测试函数
 
 ```
+
+### 设置开关
+
+在`script/GroupSwitch/main.py`中，你可以看到设置开关的函数，你可以在模块中引用开关函数。例如[邀请链的开关实现](https://github.com/W1ndys-bot/InviteChain/blob/b39ae706b40e366cd039711012404ec62aa3c895/main.py#L201)
