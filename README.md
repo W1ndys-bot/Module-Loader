@@ -66,6 +66,10 @@ DD_BOT_SECRET = "xxx"
 
 开发功能请参考：[dev.md](dev.md)
 
+## 更新日志
+
+2024 年 8 月 26 日，更新了一些细节，默认存储还是 json 文件，后续会更新为 sqlite 数据库
+
 ## 友链
 
 [School-Robot/Plugin-Loader: 用于对接 OneBot 的 Python 插件加载器 (github.com)](https://github.com/School-Robot/Plugin-Loader)
