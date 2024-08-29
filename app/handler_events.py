@@ -77,6 +77,10 @@ async def handle_message(websocket, message):
 
     msg = json.loads(message)
 
+    # 排除回应消息
+    if msg.get("status") == "ok":
+        return
+
     logging.info(f"处理消息: {msg}")
 
     # 处理事件

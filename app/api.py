@@ -3,6 +3,25 @@
 import json
 import logging
 
+from config import *
+
+
+# 检查是否是群主
+def is_group_owner(role):
+    return role == "owner"
+
+
+# 检查是否是管理员
+def is_group_admin(role):
+    return role == "admin"
+
+
+# 检查是否有权限（管理员、群主或root管理员）
+def is_authorized(role, user_id):
+    is_admin = is_group_admin(role)
+    is_owner = is_group_owner(role)
+    return (is_admin or is_owner) or (user_id in owner_id)
+
 
 # 发送私聊消息，解析cq码
 async def send_private_msg(websocket, user_id, content):
@@ -503,8 +522,8 @@ async def get_group_member_info(websocket, group_id, user_id, no_cache=False):
     await websocket.send(json.dumps(group_member_info_msg))
     while True:
         response = await websocket.recv()
-        if response.get("echo") == "get_group_member_info":
-            response_data = json.loads(response)
+        response_data = json.loads(response)
+        if response_data.get("echo") == "get_group_member_info":
             logging.info(f"[API]已获取群 {group_id} 的用户 {user_id} 信息。")
             return response_data
 
@@ -519,8 +538,8 @@ async def get_group_member_list(websocket, group_id, no_cache=False):
     await websocket.send(json.dumps(group_member_list_msg))
     while True:
         response = await websocket.recv()
-        if response.get("echo") == "get_group_member_list":
-            response_data = json.loads(response)
+        response_data = json.loads(response)
+        if response_data.get("echo") == "get_group_member_list":
             logging.info(f"[API]已获取群 {group_id} 的成员列表。")
             return response_data
 
