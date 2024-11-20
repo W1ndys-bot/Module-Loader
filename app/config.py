@@ -2,7 +2,11 @@
 
 import os
 
-owner_id = ["2769731875"]  # 机器人root管理员 QQ 号
+owner_id = ["xxx"]  # 机器人root管理员 QQ 号
+
+test_group_id = ["xxx"]  # 测试群
+
+report_group_id = "xxx"  # 上报群
 
 # ws_url = "ws://127.0.0.1:8081"  # 本地环境的 WebSocket API 地址
 

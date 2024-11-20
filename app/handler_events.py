@@ -1,20 +1,20 @@
 # handlers/message_handler.py
 
+
 import json
 import logging
 import os
 import sys
 import asyncio
+from datetime import datetime
 
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 总开关
-from app.switch import handle_GroupSwitch_group_message
+from switch import handle_GroupSwitch_group_message
 
 # 菜单
-from app.menu import handle_Menu_group_message
+from menu import handle_Menu_group_message
 
 
 # 处理消息事件的逻辑
@@ -26,14 +26,10 @@ async def handle_message_event(websocket, msg):
             group_id = msg["group_id"]
             logging.info(f"处理群消息,群ID:{group_id}")
 
-            # 并发执行群消息处理函数
-            await asyncio.gather()
-
         # 处理私聊消息
         elif msg.get("message_type") == "private":
-            user_id = msg.get("user_id")
-            # 并发执行私聊消息处理函数
-            await asyncio.gather()
+            # 由于私聊风险较大，不处理私聊消息，仅记录
+            pass
 
         else:
             logging.info(f"收到未知消息类型: {msg}")
@@ -50,13 +46,10 @@ async def handle_notice_event(websocket, msg):
         group_id = msg["group_id"]
         logging.info(f"处理群通知事件, 群ID: {group_id}")
 
-        await asyncio.gather()
-
 
 # 处理请求事件的逻辑
 async def handle_request_event(websocket, msg):
-
-    await asyncio.gather()
+    pass
 
 
 # 处理元事件的逻辑
@@ -67,7 +60,7 @@ async def handle_meta_event(websocket, msg):
 # 处理定时任务，每个心跳周期检查一次
 async def handle_cron_task(websocket):
     try:
-        await asyncio.gather()
+        pass
     except Exception as e:
         logging.error(f"处理定时任务的逻辑错误: {e}")
 

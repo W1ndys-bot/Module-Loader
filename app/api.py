@@ -2,8 +2,16 @@
 
 import json
 import logging
+import sqlite3
+from datetime import datetime
 
 from config import *
+
+SWITCH_DB_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "data",
+    "Switch",
+)
 
 
 # 检查是否是群主
@@ -21,6 +29,30 @@ def is_authorized(role, user_id):
     is_admin = is_group_admin(role)
     is_owner = is_group_owner(role)
     return (is_admin or is_owner) or (user_id in owner_id)
+
+
+# 初始化开关数据库
+def init_switch_database(group_id):
+    if not os.path.exists(SWITCH_DB_PATH):
+        os.makedirs(SWITCH_DB_PATH)
+
+    db_path = os.path.join(SWITCH_DB_PATH, f"switch.db")
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # 创建表
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS switches (
+                group_id TEXT NOT NULL UNIQUE,
+                switch_name TEXT NOT NULL,
+                status INTEGER NOT NULL
+            )
+        """
+    )
+
+    conn.commit()
+    conn.close()
 
 
 # 发送私聊消息，解析cq码
@@ -77,6 +109,21 @@ async def send_group_msg(websocket, group_id, content):
         logging.info(f"[API]已发送群消息到群 {group_id}")
     except Exception as e:
         logging.error(f"[API]发送群消息失败: {e}")
+
+
+# 发送群消息，不解析cq码
+async def send_group_msg_no_cq(websocket, group_id, content, auto_escape=True):
+    message = {
+        "action": "send_group_msg",
+        "params": {
+            "group_id": group_id,
+            "message": content,
+            "auto_escape": auto_escape,
+        },
+        "echo": "send_group_msg_no_cq",
+    }
+    await websocket.send(json.dumps(message))
+    logging.info(f"[API]已发送无CQ码的群消息到群 {group_id}")
 
 
 # 发送群消息并获取消息ID
@@ -528,6 +575,17 @@ async def get_group_member_info(websocket, group_id, user_id, no_cache=False):
             return response_data
 
 
+# 获取群成员入群时间戳并转换为日期时间
+def get_group_member_join_time(group_id, user_id, group_member_info):
+    join_time = group_member_info.get("data", {}).get("join_time", 0)
+    # 将时间戳转换为日期时间
+    join_time_datetime = datetime.fromtimestamp(join_time)
+    logging.info(
+        f"[API]已获取群 {group_id} 的用户 {user_id} 入群时间戳: {join_time}, 转换后时间: {join_time_datetime}"
+    )
+    return join_time_datetime
+
+
 # 获取群成员列表
 async def get_group_member_list(websocket, group_id, no_cache=False):
     group_member_list_msg = {
@@ -541,7 +599,14 @@ async def get_group_member_list(websocket, group_id, no_cache=False):
         response_data = json.loads(response)
         if response_data.get("echo") == "get_group_member_list":
             logging.info(f"[API]已获取群 {group_id} 的成员列表。")
-            return response_data
+            return response_data.get("data", [])
+
+
+# 获取群成员列表返回QQ号数组
+async def get_group_member_list_qq(websocket, group_id):
+    group_member_list = await get_group_member_list(websocket, group_id)
+    logging.info(f"[API]已获取群 {group_id} 的成员列表QQ号数组。")
+    return [member.get("user_id") for member in group_member_list]
 
 
 # 获取群荣誉信息
