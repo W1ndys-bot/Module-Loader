@@ -8,7 +8,9 @@ python3 main.py
 
 ## 开发功能
 
-在 `app/scripts` 中，你可以看到一个示例目录 `test/main.py`，这是一个用来测试的功能，群里发“test”，机器人会回复“Test Successful”。下面将以此为例，讲解如何开发功能。
+在 `app/scripts` 中，你可以看到一个测试功能模块 `test/main.py`，这是一个用来测试的功能，群里发“test”，机器人会回复“Test Successful”。下面将以此为例，讲解如何开发功能。
+
+还有一个目录是`Example`是一个示例模块目录，你可以基于这个目录文件进行功能开发
 
 ### 如何开发功能
 

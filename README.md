@@ -27,7 +27,7 @@ OneBot 11 标准 [botuniverse /onebot-11: OneBot 11 标准 (github.com)](https:/
 
 go-cqhttp [API | go-cqhttp 帮助中心](https://docs.go-cqhttp.org/api/)
 
-> 备注：本机器人实现基于 **Python** 做核心开发，使用 **NapCatQQ** 或 **LLOnebot 作为消息平台，**OneBot 11\*\* 作为 QQ 机器人 API 实现。
+> 备注：本机器人实现基于 **Python** 做核心开发，使用 **NapCatQQ** 或 **LLOnebot** 作为消息平台，**OneBot 11** 作为 QQ 机器人 API 实现。
 
 ## 使用方法
 
@@ -68,7 +68,17 @@ DD_BOT_SECRET = "xxx"
 
 ## 更新日志
 
-2024 年 8 月 26 日，更新了一些细节，默认存储还是 json 文件，后续会更新为 sqlite 数据库
+### 2024-09-09
+
+- feat: 貌似更新了很多，但是我自己用的更新的最及时，参考代码：https://github.com/W1ndys-bot/W1ndys-bot ， 这里是我平时用的，一些代码变动是最早更新的
+
+- feat: 在`api.py`里，其实你也可以根据自己的需求，添加一些常用函数
+
+- feat: 数据存储类型基本以SQLite为主
+
+### 2024-08-26
+
+更新了一些细节，默认存储还是 json 文件，后续会更新为 sqlite 数据库
 
 ## 友链
 
