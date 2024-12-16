@@ -23,6 +23,8 @@ Python 编写的模块加载器，使用 WebSocket 客户端模式对接上游�
 
 ### API 文档
 
+Napcat 开发文档 [开发文档 | NapCatQQ ](https://napneko.github.io/develop/api)
+
 OneBot 11 标准 [botuniverse /onebot-11: OneBot 11 标准 (github.com)](https://github.com/botuniverse/onebot-11#/)
 
 go-cqhttp [API | go-cqhttp 帮助中心](https://docs.go-cqhttp.org/api/)
@@ -74,7 +76,7 @@ DD_BOT_SECRET = "xxx"
 
 - feat: 在`api.py`里，其实你也可以根据自己的需求，添加一些常用函数
 
-- feat: 数据存储类型基本以SQLite为主
+- feat: 数据存储类型基本以 SQLite 为主
 
 ### 2024-08-26
 
