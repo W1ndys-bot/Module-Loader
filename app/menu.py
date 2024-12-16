@@ -43,35 +43,6 @@ async def handle_Menu_group_message(websocket, msg):
 
         if raw_message == "menu":
             await menu(websocket, group_id, message_id)
-        elif f"卷卷" == raw_message:
-            await send_group_msg(
-                websocket,
-                group_id,
-                f"[CQ:reply,id={message_id}]你好啊，我是卷卷，"
-                + "一个基于NapCatQQ和Onebot11协议，用Python开发的QQ机器人，我可以帮你管理群聊，也有娱乐功能，发送“menu”可以查看所有功能~\n"
-                + "开源地址：https://github.com/W1ndys-bot/W1ndys-bot\n"
-                + f"Version：{VERSION}",
-            )
-
-        elif raw_message == "join":
-            await send_group_msg(
-                websocket,
-                group_id,
-                f"[CQ:reply,id={message_id}]卷卷bot内测群：728077087\n"
-                + "新功能测试的地方，欢迎参与测试\n"
-                + "有啥好玩的点子可以告诉我哦~\n"
-                + "点击链接加入群聊【卷卷内测群】：https://qm.qq.com/q/AXh6cTjSMM",
-            )
-            # await send_ArkShareGroupEx_group(websocket, 728077087, group_id)
-        elif raw_message == "owner":
-            await send_group_msg(
-                websocket,
-                group_id,
-                f"[CQ:reply,id={message_id}]呐~这是我的开发者：\n"
-                + "QQ：2769731875\n"
-                + "https://qm.qq.com/q/dJjlDIFJfM",
-            )
-            # await send_ArkSharePeer_group(websocket, 2769731875, group_id)
 
     except Exception as e:
         logging.error(f"处理Menu群消息失败: {e}")
