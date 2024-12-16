@@ -7,6 +7,12 @@ import os
 import sys
 from datetime import datetime
 
+# 总开关
+from switch import handle_GroupSwitch_group_message
+
+# 菜单
+from menu import handle_Menu_group_message
+
 # api
 from api import *
 
@@ -14,6 +20,18 @@ from api import *
 from config import *
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# 入群欢迎和退群欢送
+from app.scripts.WelcomeFarewell.main import (
+    handle_WelcomeFarewell_group_notice,
+    WelcomeFarewell_manage,
+)
+
+# 群管系统
+from app.scripts.GroupManager.main import handle_GroupManager_group_message
+
+# 关键词回复
+from app.scripts.KeywordsReply.main import handle_KeywordsReply_group_message
 
 
 # 处理消息事件的逻辑
@@ -24,6 +42,8 @@ async def handle_message_event(websocket, msg):
 
             group_id = msg["group_id"]
             logging.info(f"处理群消息,群ID:{group_id}")
+            await handle_GroupSwitch_group_message(websocket, msg)  # 总开关
+            await handle_Menu_group_message(websocket, msg)  # 菜单
 
         # 处理私聊消息
         elif msg.get("message_type") == "private":
