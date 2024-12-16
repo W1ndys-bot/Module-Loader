@@ -8,9 +8,9 @@ import logging
 import asyncio
 
 
-from app.config import owner_id
-from app.api import *
-from app.switch import *
+from config import owner_id
+from api import *
+from switch import *
 
 # 数据存储路径，实际开发时，请将Menu替换为具体的数据存放路径
 DATA_DIR = os.path.join(
@@ -26,30 +26,8 @@ VERSION = "1.1.5"
 async def menu(websocket, group_id, message_id):
     message = (
         f"[CQ:reply,id={message_id}]"
-        + f"""卷卷bot功能列表
+        + f"""bot功能列表
 
-查看群功能开关：groupswitch
-群管理命令：groupmanager
-黑名单系统：blacklist
-违禁词系统：banwords
-邀请链系统：invitechain
-问答系统：qasystem
-关键词回复系统：keywordsreply
-群名片锁：lockgroupcard
-入群欢迎和退群欢送：welcomefarewell
-打断复读：NoAddOne
-曲阜师范大学定制服务：qfnu
-天气订阅提醒(测试)：weather
-课程订阅提醒：classtable 或 课程表
-群词云：wordcloud
-夸夸AI：kkai
-
-卷卷 + 任意内容 可以与我对话
-
-加入内测群：join
-联系开发者：owner
-
-发送对应的命令即可，例如：groupswitch
 Version：{VERSION}"""
     )
 

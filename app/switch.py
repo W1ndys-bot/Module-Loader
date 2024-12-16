@@ -2,7 +2,7 @@
 
 import json
 
-from app.api import *
+from api import *
 
 SWITCH_DATA_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
