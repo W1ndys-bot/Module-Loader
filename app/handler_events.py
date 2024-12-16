@@ -7,19 +7,13 @@ import os
 import sys
 from datetime import datetime
 
-# 总开关
-from switch import handle_GroupSwitch_group_message
-
-# 菜单
-from menu import handle_Menu_group_message
-
 # api
 from api import *
 
 # 配置
 from config import *
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # 处理消息事件的逻辑
